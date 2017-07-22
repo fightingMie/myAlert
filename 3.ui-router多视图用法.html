@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>angular demo</title>
+</head>
+<body ng-app="myApp">
+		
+	<!-- <a href="#!/index">首页</a>
+	<a href="#!/list">列表页</a> -->
+
+	<a ui-sref="index">首页</a>
+	<a ui-sref="list">列表页</a>
+
+	<div ui-view="view-a"></div>
+
+	<div ui-view="view-b"></div>
+
+	<script src="node_modules/angular/angular.js"></script>
+	<script src="node_modules/angular-ui-router/angular-ui-router.min.js"></script>
+	<script>
+		/*
+		
+			路由模块的名字  ui.router
+
+			每一个路由的配置中有一个必选项 name
+
+			ui-serf 根据路由的name属性生成正确的href地址
+
+		*/
+
+		angular.module('myApp',['ui.router'])
+
+			.config(['$stateProvider',function($stateProvider){
+
+				$stateProvider
+
+					.state({
+						url:'/index',
+						name:'index',
+						views : {
+							'view-a' : {
+								template:'<div>view-a</div>',
+							},
+							'view-b' : {
+								template:'<div>view-b</div>',
+							}
+						}
+			
+					})
+
+					.state({
+						url:'/list',
+						name:'list',
+						views : {
+							'view-a':{
+								template:'<div>list view-a</div>'
+							},
+							'view-b':{
+								template:'<div>list view-b</div>'
+							}
+						}
+					
+					})
+
+			}])
+	</script>
+</body>
+</html>

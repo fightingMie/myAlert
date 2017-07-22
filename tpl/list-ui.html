@@ -1,0 +1,6 @@
+<h4>我是列表页</h4>
+<ul>
+	<li ng-repeat="item in list">
+		<a ui-sref="article({id:item.id})"> {{ item.id }}  {{item.title}}</a>
+	</li>
+</ul>

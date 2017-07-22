@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>angular demo</title>
+</head>
+<body ng-app="myApp">
+		
+	<!-- <a href="#!/index">首页</a>
+	<a href="#!/list">列表页</a> -->
+
+	<a ui-sref="index">首页</a>
+	<a ui-sref="list">列表页</a>
+
+	<div></div>
+	<script src="node_modules/angular/angular.js"></script>
+	<script src="node_modules/angular-ui-router/angular-ui-router.min.js"></script>
+	<script>
+		/*
+		
+			路由模块的名字  ui.router
+
+			每一个路由的配置中有一个必选项 name
+
+			ui-serf 根据路由的name属性生成正确的href地址
+
+		*/
+
+		angular.module('myApp',['ui.router'])
+
+			.config(['$stateProvider',function($stateProvider){
+
+				$stateProvider
+
+					.state({
+						url:'/index',
+						name:'index',
+						templateUrl:'./tpl/index.html',
+						controller:'indexCtrl'
+					})
+
+					.state({
+						url:'/list',
+						name:'list',
+						templateUrl:'./tpl/list.html',
+						controller:'listCtrl'
+					})
+
+					.state({
+						url:'/article',
+						name:'article',
+						templateUrl:'./tpl/article.html',
+						controller:'articleCtrl'
+					})
+
+			}])
+
+			.controller('indexCtrl',['$scope',function($scope){
+
+				
+				
+			}])
+
+			.controller('listCtrl',['$scope',function($scope){
+
+				$scope.list = [
+					{
+						id:1,
+						title:'第1篇文章'
+					},
+					{
+						id:2,
+						title:'第2篇文章'
+					},
+					{
+						id:3,
+						title:'第3篇文章'
+					},
+					{
+						id:4,
+						title:'第4篇文章'
+					}
+				];
+				
+			}])
+
+			.controller('articleCtrl',['$scope',function($scope){
+
+				
+				
+			}])
+	</script>
+</body>
+</html>

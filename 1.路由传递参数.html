@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>angular demo</title>
+</head>
+<body ng-app="myApp">
+		
+	<a href="#!/index">首页</a>
+	<a href="#!/list">列表</a>
+		
+	<div ng-view></div>
+
+	<script src="node_modules/angular/angular.js"></script>
+	<script src="node_modules/angular-route/angular-route.js"></script>
+	<script>
+
+		/*
+			路由传递参数
+
+				1.配置路由 在路由的后面加上 /:参数占位符
+				2.在跳转链接中配置参数
+				3.在文章详情页面的控制器中获取具体的ID值
+
+		 */
+
+		angular.module('myApp',['ngRoute'])
+
+			.config(['$routeProvider',function($routeProvider){
+
+				$routeProvider
+					.when("/index",{
+						templateUrl:'./tpl/index.html',
+						controller:'indexCtrl'
+					})
+					.when("/list",{
+						templateUrl:'./tpl/list.html',
+						controller:'listCtrl'
+					})
+					.when("/article/:id/:title",{
+						templateUrl:'./tpl/article.html',
+						controller:'articleCtrl'
+					})
+					.otherwise('/index')
+
+			}])
+
+			.controller('indexCtrl',['$scope',function($scope){
+
+				$scope.msg = "我是首页"
+				
+			}])
+
+			.controller('listCtrl',['$scope',function($scope){
+
+				$scope.list = [
+					{
+						id:1,
+						title:'第1篇文章'
+					},
+					{
+						id:2,
+						title:'第2篇文章'
+					},
+					{
+						id:3,
+						title:'第3篇文章'
+					},
+					{
+						id:4,
+						title:'第4篇文章'
+					}
+				];
+				
+			}])
+
+			.controller('articleCtrl',['$scope','$routeParams',function($scope,$routeParams){
+
+				// $routeParams 路由参数 对象类型
+				var id = $routeParams.id;
+
+				console.log($routeParams)
+				
+			}])
+	</script>
+</body>
+</html>

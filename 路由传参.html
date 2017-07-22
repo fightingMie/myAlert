@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>angular demo</title>
+</head>
+
+<body ng-app="myApp">
+
+    <a href="#!/index">首页</a>
+    <a href="#!/list">列表页</a>
+
+    <div ng-view></div>
+
+    <script src="node_modules/angular/angular.js"></script>
+    <script src="node_modules/angular-route/angular-route.js"></script>
+    <script>
+        angular.module('myApp', ['ngRoute'])
+
+            .config(['$routeProvider', function ($routeProvider) {
+                $routeProvider
+                    .when('/index', {
+                        template: './tpl/index.html',
+                        controller: 'indexCtrl'
+                    })
+                    .when('/list', {
+                        template: './tpl/list.html',
+                        controller: 'listCtrl'
+                    })
+                    .when('/artical', {
+                        template: './tpl/artical.html',
+                        controller: 'articalCtrl'
+                    })
+            }])
+
+
+            .controller('idnexCtrl', ['$scope', function ($scope) {
+                $scope.msg = "我是首页"
+            }])
+
+            .controller('listCtrl', ['$scope', function ($scope) {
+                $scope.list = [
+                    {
+                        id: 1,
+                        title: '第1篇文章'
+                    },
+                    {
+                        id: 2,
+                        title: '第2篇文章'
+                    },
+                    {
+                        id: 3,
+                        title: '第3篇文章'
+                    },
+                    {
+                        id: 4,
+                        title: '第4篇文章'
+                    },
+                ]
+            }])
+
+            .controller('articalCtrl', ['$scope', function ($scope) {
+                $scope.msg = "我是首页"
+            }])
+
+
+
+    </script>
+</body>
+
+</html>

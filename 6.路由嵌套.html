@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>angular demo</title>
+</head>
+<body ng-app="myApp">
+
+	<div ui-view></div>
+
+	<script src="node_modules/angular/angular.js"></script>
+	<script src="node_modules/angular-ui-router/angular-ui-router.min.js"></script>
+	<script>
+		/*
+			路由嵌套
+
+				1.将导航菜单配置到一个单独的路由中去
+				2.设置导航路由 不能单独显示
+
+		 */
+
+		angular.module('myApp',['ui.router'])
+
+			.config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider){
+
+				$stateProvider
+
+					.state({
+						url:'/tab',
+						name:'tab',
+						abstract:true,
+						template:'<a ui-sref="tab.index">首页</a><a ui-sref="tab.list">列表页</a><div ui-view></div>'
+					})
+
+					.state({
+						url:'/index',
+						name:'tab.index',
+						templateUrl:'./tpl/index.html',
+						controller:'indexCtrl',
+						onEnter : function(){
+
+							alert('进入首页')
+
+						},
+						onExit : function(){
+
+							alert('离开首页')
+
+						}
+					})
+
+					.state({
+						url:'/list',
+						name:'tab.list',
+						templateUrl:'./tpl/list-ui.html',
+						controller:'listCtrl',
+						onEnter : function(){
+
+							alert('进入列表页')
+
+						},
+						onExit : function(){
+
+							alert('离开列表页')
+
+						}
+						
+					})
+
+					.state({
+						url:'/article/:id',
+						name:'article',
+						templateUrl:'./tpl/article.html',
+						controller:'articleCtrl'
+					})
+
+				$urlRouterProvider.otherwise('/tab/index');
+
+			}])
+
+			.controller('indexCtrl',['$scope',function($scope){
+
+				
+				
+			}])
+
+			.controller('listCtrl',['$scope',function($scope){
+
+				$scope.list = [
+					{
+						id:1,
+						title:'第1篇文章'
+					},
+					{
+						id:2,
+						title:'第2篇文章'
+					},
+					{
+						id:3,
+						title:'第3篇文章'
+					},
+					{
+						id:4,
+						title:'第4篇文章'
+					}
+				];
+				
+			}])
+
+			.controller('articleCtrl',['$scope','$stateParams',function($scope,$stateParams){
+
+				$scope.msg = "我的文章ID是" + $stateParams.id
+
+
+				
+			}])
+	</script>
+</body>
+</html>

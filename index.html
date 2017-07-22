@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>AngularJS • TodoMVC</title>
+		<link rel="stylesheet" href="node_modules/todomvc-common/base.css">
+		<link rel="stylesheet" href="node_modules/todomvc-app-css/index.css">
+	</head>
+	<body>
+		<section id="todoapp" ng-app="myApp" ng-controller="dmeoCtl">
+			<header id="header">
+				<h1>todos</h1>
+				<form id="todo-form" ng-submit="addTask()">
+					<input ng-model="addval" id="new-todo" placeholder="What needs to be done?" autofocus>
+				</form>
+			</header>
+			<section id="main">
+				<input type="checkbox" id="toggle-all" ng-click="choseAll()" ng-model="chosedAll" >
+				<label for="toggle-all">Mark all as complete</label>
+				<ul id="todo-list">
+					<!--filter 使用的是精确查找  -->
+					<li  ng-repeat="task in taskList | filter : {isCompleted : condition } track by $index" ng-class="{'completed' : task.isCompleted,'editing': task.isEdit}">
+						<div class="view">
+							<input class="toggle" type="checkbox" ng-model="task.isCompleted" ng-click="changeLight()">
+							<label ng-bind="task.name" ng-dblclick="edit(task.id)"  ></label>
+							<button class="destroy" ng-click="deltask(task.id)"></button>
+						</div>
+						<form>
+							<input class="edit" ng-model="task.name" ng-blur="leaveBlur(task.id)">
+						</form>
+					</li>
+				</ul>
+			</section>
+			<footer id="footer">
+				<span id="todo-count" >
+					<strong>{{addCount()}}</strong>&nbsp;items left
+				</span>
+				<ul id="filters">
+					<li>
+						<a ng-click="showState('All')" href="javascript:;">All</a>
+					</li>
+					<li>
+						<a ng-click="showState('Active')" href="javascript:;">Active</a>
+					</li>
+					<li>
+						<a ng-click="showState('Completed')" href="javascript:;">Completed</a>
+					</li>
+				</ul>
+				<button id="clear-completed" ng-click="clearCom()">Clear completed</button>
+			</footer>
+		</section>
+	
+		<script src="node_modules/angular/angular.js"></script>
+		<script src="js/app.js"></script>
+	</body>
+</html>

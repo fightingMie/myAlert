@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>angular demo</title>
+</head>
+<body ng-app="myApp">
+		
+	<a href="#!/index">首页</a>
+	<a href="#!/list">列表</a>
+		
+	<div ng-view></div>
+
+	{{ abc }}
+
+	<script src="node_modules/angular/angular.js"></script>
+	<script src="node_modules/angular-route/angular-route.js"></script>
+	<script>
+		/*
+			run方法的作用:
+
+				页面一上来只执行一次 可以做一些初始化的工作
+
+				只能依赖 $rootScope  不能依赖$scope
+
+			模块对象.run(['$rootScope',function($rootScope){
+				
+				// $rootScope 全局作用域 在全局作用域下挂载的任何数据 在任何的控制器中都是能够访问到的 能够向页面中暴露数据
+
+			}])
+
+		*/
+
+		angular.module('myApp',['ngRoute'])
+
+			.config(['$routeProvider',function($routeProvider){
+
+				$routeProvider
+					.when("/index",{
+						templateUrl:'./tpl/index.html',
+						controller:'indexCtrl'
+					})
+					.when("/list",{
+						templateUrl:'./tpl/list.html',
+						controller:'listCtrl'
+					})
+					.when("/article/:id/:title",{
+						templateUrl:'./tpl/article.html',
+						controller:'articleCtrl'
+					})
+					.otherwise('/index')
+
+			}])
+
+			.run(['$rootScope',function($rootScope){
+
+				$rootScope.abc = "abc";
+
+			}])
+
+			.controller('indexCtrl',['$scope','$rootScope',function($scope,$rootScope){
+
+				// alert($rootScope.abc)
+				
+				// 当视图加载完毕之后执行对应的处理函数
+				$scope.$on("$viewContentLoaded",function(){
+
+					alert(1111)
+
+				});
+				
+			}])
+
+			.controller('listCtrl',['$scope',function($scope){
+
+				$scope.list = [
+					{
+						id:1,
+						title:'第1篇文章'
+					},
+					{
+						id:2,
+						title:'第2篇文章'
+					},
+					{
+						id:3,
+						title:'第3篇文章'
+					},
+					{
+						id:4,
+						title:'第4篇文章'
+					}
+				];
+				
+			}])
+
+			.controller('articleCtrl',['$scope','$routeParams',function($scope,$routeParams){
+
+				// $routeParams 路由参数 对象类型
+				var id = $routeParams.id;
+
+				console.log($routeParams)
+				
+			}])
+	</script>
+</body>
+</html>
