@@ -18,7 +18,7 @@
 				<input type="checkbox" id="toggle-all" ng-click="choseAll()" ng-model="chosedAll" >
 				<label for="toggle-all">Mark all as complete</label>
 				<ul id="todo-list">
-					<!--filter 使用的是精确查找  -->
+					<!--filter 使用的是精确查找 ,track by $index 写在了过滤器后面 ,过滤之后的数据防止重复-->
 					<li  ng-repeat="task in taskList | filter : {isCompleted : condition } track by $index" ng-class="{'completed' : task.isCompleted,'editing': task.isEdit}">
 						<div class="view">
 							<input class="toggle" type="checkbox" ng-model="task.isCompleted" ng-click="changeLight()">
