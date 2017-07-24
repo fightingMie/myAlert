@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body ng-app="myApp">
+
+    <a ui-sref="index.content">首页</a>
+    <a ui-sref="list">列表页</a>
+
+    <div ui-view></div>
+
+	<script src="node_modules/angular/angular.js"></script>
+	<script src="node_modules/angular-ui-router/angular-ui-router.min.js"></script>
+    <script>
+        angular.module('myApp',['ui.router'])
+                .config('$stateProvider',[function($stateProvider){
+                    $stateProvider
+                        .state({
+                            name : 'index',
+                            url : '/index',
+                            templateUrl : './tpl-1/index.html'
+                        })
+
+                        .state({
+                            name : 'index.content',
+                            url : '/content',
+                            views : {
+                                'views-a' : {
+                                    template : "<div>我是views-a的内容</div>"
+                                },
+                                'views-b' : {
+                                    template : "<div>我是views-b的内容</div>"
+                                }
+                            }
+                        })
+
+                        .state({
+                            name : 'list',
+                            url : '/list',
+                            template: './tpl-1/list.html'
+                        })
+                }])
+    </script>
+</body>
+</html>

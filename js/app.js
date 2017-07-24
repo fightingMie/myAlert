@@ -13,12 +13,11 @@ angular.module('myApp', [])
                 for (var i = 0; i < list1.length; i++) {
                     $scope.taskList.push(list1[i])
                 }
-                console.log($scope.taskList)
+                
                 for (var i = 0; i < $scope.taskList.length; i++) {
                     $scope.taskList[i]['isEdit'] = false;
                 }
             }
-            // return $scope.taskList
         }
         
         $scope.getNum();
@@ -59,12 +58,11 @@ angular.module('myApp', [])
             });
             $scope.addval = ""
 
-            //使用本地存储
+            //使用本地存储,本地存储里面要存储字符串类型的值
             
-            var list = JSON.stringify($scope.taskList);
-            console.log(list)
-            window.localStorage.setItem("localList", list)
-         
+            // var list = JSON.stringify($scope.taskList);
+            // console.log(list)
+            // window.localStorage.setItem("localList", list
            
         }
 
@@ -163,5 +161,13 @@ angular.module('myApp', [])
                 $scope.taskList[i].isEdit = false;
             }
         }
+
+        //监听字符串的变化，字符串一旦变化就更新本地存储的数据
+        $scope.$watch('taskList',function(){
+            console.log($scope.taskList)
+            var list = JSON.stringify($scope.taskList);
+            console.log(list)
+            window.localStorage.setItem("localList", list)
+        },true)
 
     }])
